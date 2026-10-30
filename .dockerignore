@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+*.log
+.pytest_cache
+.claude
+.agents
+.vscode
+.env
+data/satellite_outputs
+*.SAFE

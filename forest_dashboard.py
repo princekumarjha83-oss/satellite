@@ -21,7 +21,7 @@ st.sidebar.markdown("""
 st.sidebar.divider()
 
 # --- Backend Status Check (Silently connected in background) ---
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = os.environ.get("BACKEND_URL", "http://127.0.0.1:8000")
 backend_healthy = False
 backend_stats = None
 

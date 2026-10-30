@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: eco-mrv-satellite
+    runtime: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 8501
+      - key: GROQ_API_KEY
+        sync: false
