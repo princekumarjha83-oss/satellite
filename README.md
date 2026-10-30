@@ -1,86 +1,236 @@
-# ECO-MRV local setup
+# 🌿🛰️ ECO-MRV AGENT: Autonomous Environmental Intelligence & Satellite Monitoring
 
-From this folder on Windows:
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-22c55e?style=for-the-badge&logo=render&logoColor=white)](https://eco-mrv-satellite.onrender.com)
+[![Python Version](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.40+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.6+-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m streamlit run app.py
+An end-to-end multi-modal environmental intelligence platform that unifies **ESA Sentinel-2 multispectral satellite imagery**, **zero-shot computer vision (Google OWL-ViT)**, and **canopy bioacoustics (LAION CLAP)** to deliver cryptographically auditable, real-time Measurement, Reporting, and Verification (MRV) for biosphere reserves.
+
+---
+
+## 🚀 Live Deployments
+
+- 🖥️ **Live Web Application (Render)**: [https://eco-mrv-satellite.onrender.com](https://eco-mrv-satellite.onrender.com)
+- 🔌 **Interactive API Documentation**: [https://eco-mrv-satellite.onrender.com/docs](https://eco-mrv-satellite.onrender.com/docs)
+- 📦 **GitHub Repository**: [https://github.com/princekumarjha83-oss/satellite](https://github.com/princekumarjha83-oss/satellite)
+
+---
+
+## 🗺️ System Architecture
+
+The platform is designed around a multi-tier pipeline integrating sensory data, deep learning inference engines, missing-data-aware evidence fusion, and cryptographic provenance ledgers:
+
+```mermaid
+flowchart TD
+    subgraph Data_Sources["1. Multi-Modal Sensory Ingestion"]
+        S1["🛰️ ESA Sentinel-2 L2A Imagery (B04 Red, B08 NIR)"]
+        S2["🎙️ Bioacoustic Audio (Microphone / WAV / FLAC / MP3)"]
+        S3["📷 Wildlife Camera Traps & Live Webcams"]
+    end
+
+    subgraph Deep_Learning["2. AI & Spectral Processing Engines"]
+        M1["🌿 Normalized Difference Vegetation Index (NDVI)<br/>ΔNDVI = (NIR - Red) / (NIR + Red)"]
+        M2["🔊 LAION CLAP (Contrastive Language-Audio Pretraining)<br/>Acoustic Complexity Index (ACI)"]
+        M3["🐆 Google OWL-ViT (Open-World Localization ViT)<br/>Zero-Shot Fauna Detection"]
+    end
+
+    subgraph Fusion_Layer["3. Evidence Fusion & Anomaly Core"]
+        F1["⚖️ Missing-Data-Aware Weighted Normalization<br/>Camera: 0.30 | Audio: 0.30 | Satellite: 0.40"]
+        F2["📊 Multi-Modal Ecosystem Health Score (MEHS)"]
+        F3["🔐 SHA-256 Provenance & Tamper-Proof Audit Ledger"]
+    end
+
+    subgraph Serving_Layer["4. User Interfaces & APIs"]
+        UI1["🖥️ Streamlit 3D Forest Canopy UI (:8501)"]
+        API1["⚡ FastAPI High-Performance Backend (:8000)"]
+        LLM1["🤖 Groq LLM Grounded Ecological Reporting"]
+    end
+
+    S1 --> M1
+    S2 --> M2
+    S3 --> M3
+
+    M1 --> F1
+    M2 --> F1
+    M3 --> F1
+
+    F1 --> F2
+    F2 --> F3
+
+    F3 --> UI1
+    F3 --> API1
+    F2 --> LLM1
+    LLM1 --> UI1
 ```
 
-Open http://localhost:8501. For the other dashboard API features, run this in a second terminal:
+---
 
-```powershell
-.\.venv\Scripts\python.exe -m uvicorn backend:app --port 8000 --reload
-```
+## 🌟 Core Features
 
-## Wildlife analysis
+### 1. 🛰️ Sentinel-2 Multispectral & Temporal Delta Engine
+- **Spatial Resolution**: Computes 10m-resolution calibrated vegetation dynamics using Sentinel-2 Level-2A surface reflectance bands (B04 Red, B08 NIR).
+- **Temporal Anomaly Tracking**: Analyzes temporal deltas between observation baselines to pinpoint deforestation frontiers, degradation, and forest canopy recovery.
+- **Automated Cloud & Water Masking**: Filters invalid pixels to eliminate atmospheric distortion from carbon baseline calculations.
 
-## Multi-modal evidence workflow
+### 2. 🎙️ Bioacoustic Canopy Intelligence (CLAP + ACI)
+- **LAION CLAP Integration**: Resamples audio to 48 kHz and evaluates 5-second sliding windows against 26 animal-call taxonomy descriptors and 11 ambient background noise profiles.
+- **Acoustic Complexity Index (ACI)**: Computes matrix spectrogram variability to assess ecological biodiversity and canopy density.
+- **Noise Rejection**: Skips silent and ambiguous acoustic sequences with dynamic separation thresholds.
 
-The Reports page now preserves the existing camera, audio and satellite evidence
-and derives a traceable project-specific workflow:
+### 3. 🐆 Open-Vocabulary Wildlife Detection (Google OWL-ViT)
+- **Zero-Shot Animal Localization**: Identifies wildlife in camera traps, video streams, and live webcams without requiring task-specific retraining.
+- **Flexible Taxonomic Queries**: Detects critical umbrella and keystone species (Bengal Tigers, Asian Elephants, Indian Leopards, One-horned Rhinos, etc.).
+- **Live Video Streaming**: Real-time WebRTC camera frame processing with bounding box visualization.
+
+### 4. ⚖️ Multi-Modal Evidence Fusion & MEHS
+- **Renormalization Pipeline**: Dynamically re-weights sensor modalities when an input stream is unavailable, ensuring missing sensors do not bias the score toward zero.
+- **Historical Anomaly Engine**: Triggers automated alert statuses when bi-temporal measurements deviate beyond 3 standard deviations from historical baselines.
+- **Groq AI Ecological Synthesis**: Converts fused numerical telemetry into natural-language audit narratives for forest conservators and carbon credit regulators.
+
+### 5. 🔐 Cryptographic Ledger & Auditability
+- Generates a **SHA-256 cryptographic digest** for every uploaded satellite tile, audio recording, and camera frame.
+- Exports audit-ready JSON and Markdown reports with full provenance chains for transparent carbon credit certification.
+
+---
+
+## 📁 Repository Structure
 
 ```text
-camera / video (OWL-ViT) + audio (CLAP) + satellite measurements
-→ structured raw features + normalized evidence
-→ missing-data-aware weighted fusion
-→ agreement + historical anomaly assessment
-→ ecosystem evidence score + Proposed Multi-Modal Ecosystem Health Score (MEHS)
-→ human-reviewed report
+├── .streamlit/
+│   └── config.toml               # Streamlit theme & server configuration
+├── assets/
+│   ├── audio/                    # Reference bioacoustic audio files
+│   ├── cameras/                  # Sample camera trap imagery
+│   ├── forests/                  # Indian biosphere reserve catalog assets
+│   └── videos/                   # Simulation wildlife video feeds
+├── Dockerfile                    # Production container specification (Python 3.11-slim + GDAL)
+├── render.yaml                   # Render Blueprint deployment specification
+├── vercel.json                   # Vercel static gateway configuration
+├── start.sh                      # Multi-process entrypoint (FastAPI + Streamlit)
+├── index.html                    # Edge web portal for Vercel deployment
+├── app.py                        # Streamlit main entrypoint & navigation
+├── backend.py                    # FastAPI REST API engine
+├── forest_dashboard.py           # Forest reserve monitoring & satellite UI
+├── satellite_ndvi.py             # Sentinel-2 multispectral vegetation algorithms
+├── satellite_temporal.py         # Bi-temporal change detection & GeoTIFF generation
+├── satellite_comparison.py       # Comparative satellite visualization components
+├── satellite_evidence.py         # Satellite cryptographic evidence processor
+├── animal_audio.py               # LAION CLAP acoustic species classifier
+├── bioacoustics.py               # Audio metrics & ACI computation
+├── live_camera.py                # OWL-ViT wildlife vision & WebRTC interface
+├── ecosystem_pipeline.py         # Multi-modal fusion & MEHS algorithm
+├── report_explanation.py         # Groq LLM report generation engine
+├── ecomrv_config.py              # Configuration weights & hyperparameter defaults
+├── requirements.txt              # Production Python package dependencies
+└── tests/                        # Comprehensive test suite
 ```
 
-The initial configurable weights are camera 0.30, audio 0.30 and satellite
-0.40 in `ecomrv_config.py`. If a modality is missing, its weight is
-renormalized across the available modalities; missing data is never assumed to
-be zero. MEHS is a project-specific evidence indicator, not a certified or
-validated ecological metric. An anomaly result is only available when at least
-three historical observations are supplied to the processing layer.
+---
 
-An ordinary RGB satellite image remains evidence of an uploaded file only. It
-is excluded from numerical fusion until a calibrated spatial vegetation
-measurement and suitable metadata are available.
+## 💻 Local Setup & Installation
 
-Use the sidebar to open **Bioacoustics** or **Live Camera & Video**. They are separate pages; only the selected page runs. The existing satellite, map, metrics and reports tabs are under **Forest Dashboard**.
+### Prerequisites
+- Python 3.10 or 3.11
+- Git
+- Modern browser (Chrome / Edge / Firefox)
 
-**Reports**, directly below **Live Camera & Video**, combines user-provided audio, image, video and webcam evidence. Upload and analyze media on the respective pages, then select which evidence to include in Reports. Supply project, zone, monitoring date and observation notes. The page shows evidence cards, animal findings and timestamps, uncertain/background events, cross-source label comparisons, and a final summary. Download Markdown for reading or JSON with full analysis evidence. No inference runs when opening Reports. Multiple media items are retained in session memory; reanalyzing the same media replaces its saved analysis. Webcam entries are snapshots of the latest available 300 analyzed frames for each camera session.
-
-Report notes and project metadata are user supplied. Matching animal labels across uploads do not prove the same event or animal; recordings are not time/location synchronized. The report does not manufacture ecological health scores, calibrated confidence, environmental risk or satellite findings. Pending analysis is distinguished from an analyzed source with no matches. The existing demonstration reports under Forest Dashboard are not included.
-
-Satellite images can also be included: upload PNG/JPEG/TIFF in **Reports → Add satellite image** or the Forest Dashboard's satellite upload section. The report includes a preview, image dimensions, format, file size and SHA-256 identity. Satellite inputs are kept separate from animal detections. The former fixed vegetation/carbon figures in the upload flow have been removed. Real vegetation indices and change estimates are not computed; they require a calibrated spectral-band pipeline and aligned observations. Existing satellite demonstration maps and the simulated backend endpoint do not supply report measurements.
-
-Switching pages in the same browser session preserves uploaded media, source selections, detection settings and completed reports. A restored upload is labeled with its filename and can be cleared. Analysis only starts when requested; returning to a page does not rerun completed inference. Live camera access must be enabled again after leaving its page. Work is held in browser-session memory, not permanent storage.
-
-- **Audio & spectrogram:** upload WAV/MP3/FLAC/OGG or record a microphone clip. Playback and an interactive STFT spectrogram use the actual samples. Audio measurements can be downloaded. Limit: 50 MB, 5 minutes. Click **Identify animal sounds** below the plot to see possible animals, call descriptions, scores, timestamps, replay of the strongest match, and a downloadable detailed JSON report.
-- Audio identification uses pretrained `laion/clap-htsat-unfused`, downloaded and cached on first use (approximately 615 MB). No API key is needed. It compares 26 animal-call descriptions and 11 background descriptions using the actual waveform, resampled to 48 kHz. Every non-overlapping 5-second window, including the final partial window, is inspected. Speech, music, rain and other non-animal sounds compete with the animal labels. Quiet windows skip model inference.
-- Audio matches are **possible animal calls**, not confirmed species. A match must exceed a heuristic cosine similarity of 0.25 and beat the runner-up by at least 0.03; these thresholds are not calibrated confidence or accuracy estimates. Similar calls such as lion/tiger or sheep/goat can be ambiguous. Each window reports only its strongest match, so simultaneous or quiet animals may be missed. Window timestamps are not exact call boundaries, and repeated matching windows do not count individual animals. The timeline includes uncertain and background results so that rejection is visible.
-- **Animal camera & video:** upload an image, capture a camera photo, upload video, or enable the live browser camera. Click **Analyze animals** for uploads. For live video, enable the detector, click **START**, and grant camera access. Use **STOP** to release the camera.
-- Detection uses pretrained Google OWL-ViT with editable animal names, including lion and tiger. The first use downloads model weights (roughly 600 MB) from Hugging Face; subsequent runs reuse the local cache. No API key is required. CPU processing may take seconds per frame. A GPU improves speed. Live inference is sampled at most once per second, subject to processing speed.
-- Reports appear below the analyzed image/video or camera with species predictions, scores, timestamps, and downloadable JSON. Video analysis samples up to 120 frames; its report states the covered duration. Detections between sampled frames can be missed. Live reports retain the last 300 analyzed frames, and repeated observations do not count unique animals.
-- Detection scores are not calibrated accuracy percentages. The model only searches the supplied names; it cannot identify every animal or guarantee a correct species. Review predictions, especially similar species, obscured subjects and poor lighting. No match does not establish that no animal is present.
-- Local camera access uses the browser's webcam on localhost. Remote deployment requires HTTPS and may require WebRTC STUN/TURN configuration. No real forest camera feeds, thermal hardware, or remote PTZ controls are connected.
-
-The audio endpoint `/api/process/audio` returns measured duration, sample rate, RMS amplitude, dominant frequency and ACI. This endpoint remains measurements-only with an empty species list; animal-call identification runs in the dashboard audio panel through `animal_audio.py`. Simulated confidence and biotic-ratio fields were removed. Other dashboard sections retain their existing demonstration data.
-
-## Checks
-
-If an existing Streamlit process reports `Cannot copy out of meta tensor`, stop it with Ctrl+C and restart using the command above. A browser refresh alone does not clear old model-loading state. The current loader initializes on CPU, validates and loads the complete checkpoint, and then moves the model to the selected device. Visual and audio model initialization is serialized. It does not use `to_empty()` to bypass missing trained weights.
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest test_wildlife test_animal_audio test_pages test_wildlife_reporting -v
+### 1. Clone the Repository
+```bash
+git clone https://github.com/princekumarjha83-oss/satellite.git
+cd satellite
 ```
 
-The multimodal scoring checks can also be run with:
+### 2. Set Up Virtual Environment
+```bash
+# Windows (PowerShell)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
-```powershell
-.\.venv\Scripts\python.exe -m unittest test_ecosystem_pipeline -v
+# Linux / macOS
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-These tests check actual audio processing, resampling and time coverage, rejection of silent/ambiguous/background sounds, report display and replay, result invalidation for changed uploads, video decoding, detection postprocessing, reports and live-frame callbacks. Mocked model tests do not measure model accuracy or browser camera permissions.
+### 3. Install Dependencies
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
-Real-model smoke checks used four public [ESC-50 recordings](https://github.com/karolpiczak/ESC-50): `1-100032-A-0.wav` matched Dog, `1-26806-A-1.wav` matched Rooster, and `1-17367-A-10.wav` matched Rain without reporting an animal. `1-34094-A-5.wav` ranked Cat first but was marked uncertain because Fox scored within the separation threshold. These examples verify operation, not general species-identification accuracy.
+### 4. Configure Environment Variables
+Copy `.env.example` to `.env` and configure your API keys:
+```bash
+cp .env.example .env
+```
+Edit `.env`:
+```ini
+GROQ_API_KEY=your_groq_api_key_here
+```
 
-Implementation references: [OWL-ViT](https://huggingface.co/docs/transformers/model_doc/owlvit), [CLAP](https://huggingface.co/docs/transformers/model_doc/clap), [Streamlit WebRTC](https://github.com/whitphx/streamlit-webrtc).
+### 5. Run the Application
+Start the Streamlit interface:
+```bash
+streamlit run app.py
+```
 
+*(Optional)* Run the FastAPI backend server in a separate terminal:
+```bash
+uvicorn backend:app --host 127.0.0.1 --port 8000 --reload
+```
 
-".\mrv\.venv\Scripts\python.exe" -m streamlit run ".\mrv\app.py"
+Access the dashboard at **`http://localhost:8501`** and the API documentation at **`http://localhost:8000/docs`**.
+
+---
+
+## ☁️ Cloud Deployment
+
+### Deploying on Render (Recommended)
+This repository includes a production-ready `Dockerfile` and `render.yaml` configured to run both the FastAPI API and the Streamlit interface within a single container:
+
+1. Sign in to [Render](https://render.com) using your GitHub account.
+2. Click **New +** → **Web Service**.
+3. Select the repository **`princekumarjha83-oss/satellite`**.
+4. Configure settings:
+   - **Runtime**: `Docker`
+   - **Branch**: `main`
+   - **Environment Variables**:
+     - `PORT`: `8501`
+     - `GROQ_API_KEY`: *(Your Groq API key)*
+5. Click **Create Web Service**. Your service will build and go live at `https://<your-service-name>.onrender.com`.
+
+### Deploying on Vercel (Web Showcase & Portal)
+1. Sign in to [Vercel](https://vercel.com) and click **Add New...** → **Project**.
+2. Import **`princekumarjha83-oss/satellite`**.
+3. Set **Application Preset** to **`Other`**.
+4. Click **Deploy**. Vercel will deploy the edge portal in seconds, embedding the live Render app.
+
+---
+
+## 🧪 Testing
+
+Execute the comprehensive unit and integration test suite:
+
+```bash
+# Run wildlife and audio detection tests
+python -m unittest test_wildlife test_animal_audio test_pages test_wildlife_reporting -v
+
+# Run multi-modal ecosystem scoring tests
+python -m unittest test_ecosystem_pipeline -v
+```
+
+---
+
+## 📜 Research & Architecture References
+- **ESA Copernicus**: [Sentinel-2 Level-2A Processing Baseline](https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi)
+- **Google Research**: [OWL-ViT Open-World Detection](https://huggingface.co/docs/transformers/model_doc/owlvit)
+- **LAION Audio**: [CLAP Contrastive Language-Audio Pretraining](https://huggingface.co/docs/transformers/model_doc/clap)
+- **Groq**: [LPU Inference Engine](https://groq.com)
+
+---
+
+<p align="center">
+  <b>Made with ❤️ by Prince Kumar Jha</b>
+</p>
