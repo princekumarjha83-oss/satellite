@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECO-MRV AGENT · Environmental Intelligence & Satellite Monitoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest-darkest: #050d08;
+      --forest-dark: #0a1a0f;
+      --forest-mid: #122a1a;
+      --forest-light: #1a3d26;
+      --emerald: #22c55e;
+      --emerald-glow: #34d399;
+      --emerald-soft: #4ade80;
+      --lime: #a3e635;
+      --mint: #b8f5d0;
+      --text-primary: #e2f5e9;
+      --text-secondary: #98c4a8;
+      --text-muted: #5a8a6a;
+      --glass-bg: rgba(18, 42, 26, 0.65);
+      --glass-border: rgba(34, 197, 94, 0.22);
+      --card-bg: rgba(10, 26, 15, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--forest-darkest);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse 120% 60% at 20% 10%, rgba(34, 197, 94, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 50% at 85% 85%, rgba(163, 230, 53, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 40% at 50% 50%, rgba(5, 13, 8, 0.95) 0%, transparent 100%);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(5, 13, 8, 0.82);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      font-size: 28px;
+      filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.6));
+    }
+
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #4ade80, #a3e635);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mint);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--emerald-soft);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #050d08;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #34d399, #22c55e);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(34, 197, 94, 0.55);
+    }
+
+    .btn-secondary {
+      background: rgba(18, 42, 26, 0.7);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(26, 61, 38, 0.85);
+      border-color: var(--emerald);
+      color: #fff;
+    }
+
+    main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+      background: rgba(163, 230, 53, 0.1);
+      border: 1px solid rgba(163, 230, 53, 0.3);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--lime);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.18;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, #4ade80, #a3e635, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .tab-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      padding: 10px 22px;
+      background: rgba(18, 42, 26, 0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: var(--emerald);
+      color: #fff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .app-frame-container {
+      background: var(--card-bg);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(34, 197, 94, 0.15);
+      position: relative;
+    }
+
+    .frame-bar {
+      background: rgba(5, 13, 8, 0.95);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .frame-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+
+    .frame-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: rgba(18, 42, 26, 0.6);
+      padding: 4px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .app-iframe {
+      width: 100%;
+      height: 850px;
+      border: none;
+      display: block;
+      background: #050d08;
+    }
+
+    .grid-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: var(--emerald);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.18);
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .meta-box {
+      margin-top: 18px;
+      padding: 12px 14px;
+      background: rgba(18, 42, 26, 0.45);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--mint);
+    }
+
+    footer {
+      border-top: 1px solid var(--glass-border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: rgba(5, 13, 8, 0.7);
+    }
+
+    footer a {
+      color: var(--emerald-soft);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 32px; }
+      .app-iframe { height: 650px; }
+      header { padding: 14px 20px; }
+      .nav-actions .btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="brand">
+      <span class="brand-icon">🌿🛰️</span>
+      <div>
+        <div class="brand-title">ECO-MRV AGENT</div>
+        <div class="brand-sub">Environmental Intelligence Platform</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Render Engine Online</span>
+      </div>
+      <a href="https://eco-mrv-satellite.onrender.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <span>Launch App ↗</span>
+      </a>
+      <a href="https://github.com/princekumarjha83-oss/satellite" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-pill">Autonomous Forest Monitoring & Carbon MRV</div>
+      <h1 class="hero-title">
+        Multispectral Satellite Analytics &amp;<br/>
+        <span>Bioacoustic Ecosystem Intelligence</span>
+      </h1>
+      <p class="hero-desc">
+        Real-time Sentinel-2 L2A NDVI temporal delta tracking, OWL-ViT multi-modal animal detection, 
+        CLAP bioacoustic bio-complexity indexing, and cryptographic SHA-256 evidence ledgers.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#interactive-suite" class="btn btn-primary" onclick="switchTab('app')">
+          <span>Explore Interactive App</span>
+        </a>
+        <a href="https://eco-mrv-satellite.onrender.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <span>Open Fullscreen in Render ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <div id="interactive-suite">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('app')">🖥️ Live Application</button>
+        <button class="tab-btn" onclick="switchTab('architecture')">🛰️ System Architecture</button>
+        <button class="tab-btn" onclick="switchTab('api')">⚡ API Engine & Endpoints</button>
+      </div>
+
+      <!-- Tab 1: Live Interactive App -->
+      <div id="tab-app" class="tab-content active">
+        <div class="app-frame-container">
+          <div class="frame-bar">
+            <div class="frame-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="frame-url">https://eco-mrv-satellite.onrender.com</div>
+            <a href="https://eco-mrv-satellite.onrender.com" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-soft); font-size: 12px; text-decoration: none; font-weight: 600;">Open External ↗</a>
+          </div>
+          <iframe 
+            src="https://eco-mrv-satellite.onrender.com/?embedded=true" 
+            class="app-iframe" 
+            title="ECO-MRV Live Dashboard"
+            allow="camera; microphone; fullscreen; clipboard-read; clipboard-write;"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Tab 2: Architecture & Features -->
+      <div id="tab-architecture" class="tab-content">
+        <div class="grid-features">
+          <div class="card">
+            <div class="card-icon">🛰️</div>
+            <h3 class="card-title">Sentinel-2 Multispectral Ingestion</h3>
+            <p class="card-desc">Processes European Space Agency (ESA) Sentinel-2 Level-2A imagery bands B04 (Red, 665nm) and B08 (NIR, 842nm) at native 10m spatial resolution.</p>
+            <div class="meta-box">Formula: NDVI = (NIR - Red) / (NIR + Red)</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <h3 class="card-title">Temporal Delta & Anomaly Detection</h3>
+            <p class="card-desc">Computes pixel-wise bi-temporal differentials across sequential observation windows with automated cloud and water masking.</p>
+            <div class="meta-box">Output: Deforestation & Regrowth GeoTIFFs</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🎙️</div>
+            <h3 class="card-title">Bioacoustic CLAP Species Engine</h3>
+            <p class="card-desc">Calculates the Acoustic Complexity Index (ACI) and cross-correlates canopy recordings with endangered species vocalization benchmarks.</p>
+            <div class="meta-box">Models: CLAP + PyTorch Audio ACI</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🐆</div>
+            <h3 class="card-title">OWL-ViT Vision Animal Detection</h3>
+            <p class="card-desc">Zero-shot open-vocabulary object detection pipeline for wildlife camera traps across Indian and global biosphere reserves.</p>
+            <div class="meta-box">Coverage: Corbett, Gir, Kaziranga, Sundarbans</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3 class="card-title">Cryptographic Evidence Ledger</h3>
+            <p class="card-desc">Every raw satellite file, audio spectrogram, and observation is signed with SHA-256 for verifiable, tamper-evident MRV carbon auditing.</p>
+            <div class="meta-box">Status: Audit-ready JSON & Markdown exports</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3 class="card-title">Groq LLM Ecological Intelligence</h3>
+            <p class="card-desc">Generates grounded natural language ecological health reports and policy summaries from fused sensor findings.</p>
+            <div class="meta-box">Powered by: Groq AI Ultra-Fast Engine</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: API Engine -->
+      <div id="tab-api" class="tab-content">
+        <div class="grid-features">
+          <div class="card">
+            <div class="card-icon">🔌</div>
+            <h3 class="card-title">FastAPI Backend Endpoints</h3>
+            <p class="card-desc">Comprehensive REST API running in tandem with the Streamlit frontend. Full interactive OpenAPI documentation available.</p>
+            <div class="meta-box">GET /health · POST /ingest/satellite · POST /analyze/bioacoustics</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🌲</div>
+            <h3 class="card-title">Indian Forest Reserves Catalog</h3>
+            <p class="card-desc">Direct geographical queries for key biosphere reserves with baseline canopy profiles and historical monitoring coordinate bounds.</p>
+            <div class="meta-box">Western Ghats, Corbett, Gir, Bandipur, Sundarbans</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">📦</div>
+            <h3 class="card-title">Dockerized Microservices</h3>
+            <p class="card-desc">Multi-process container with automated port binding, supervisor execution, and cloud deployment ready for Render, AWS, and GCP.</p>
+            <div class="meta-box">Runtime: Python 3.11-slim + GDAL + PyTorch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>ECO-MRV AGENT &copy; 2026 · Powered by Sentinel-2, PyTorch &amp; Groq · Deployed on <a href="https://eco-mrv-satellite.onrender.com" target="_blank" rel="noopener noreferrer">Render</a> &amp; <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a></p>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      const activeBtn = event ? event.currentTarget : document.querySelector(`.tab-btn[onclick*="${tabId}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
